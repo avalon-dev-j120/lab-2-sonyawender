@@ -2,8 +2,8 @@ package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -18,7 +18,7 @@ public class Task4 implements Task {
      */
     @Override
     public void run() throws IOException {
-        Properties properties = read("/Users/sonyawender/Documents/SPbSTU/J120/lab-2-sonyawender/src/resources/database.properties");
+        Properties properties = read("resources/database.properties");
 
         /*
          * TODO(Студент): Выполнить задание №4
@@ -37,16 +37,16 @@ public class Task4 implements Task {
      * @return новый экземпляр типа {@link Properties}
      */
     private Properties read(String path) throws IOException {
-        FileInputStream fileInputStream = null;
+        InputStream inputStream = null;
         Properties properties = new Properties();
         try {
-            fileInputStream = new FileInputStream(path);
-            properties.load(fileInputStream);
+            inputStream = ClassLoader.getSystemResourceAsStream(path);
+            properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (fileInputStream != null){
-                fileInputStream.close();
+            if (inputStream != null){
+                inputStream.close();
             }
         }
         return properties;
