@@ -2,9 +2,9 @@ package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Задание №3
@@ -52,7 +52,26 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private Collection<String> read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        Collection<String> linkedList = new LinkedList<>();
+        try {
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.ready()){
+                linkedList.add(bufferedReader.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+            if (fileReader != null) {
+                fileReader.close();
+            }
+        }
+        return linkedList;
     }
 
     /**
@@ -66,6 +85,12 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, Collection<String> collection) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (PrintWriter printWriter = new PrintWriter(file)) {
+            for (String country : collection) {
+                printWriter.write(country + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
